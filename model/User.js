@@ -13,11 +13,22 @@ const userSchema = new mongoose.Schema({
         max: 255,
         min: 6
     },
+    isVerified:{
+        type: Boolean,
+        default: false
+    },
     password: {
         type: String,
         required: true,
         max: 1024,
         min: 6
+    },
+    passwordResetToken: {
+        type: String,
+        max: 1024
+    },
+    passwordResetExpires: {
+        type: Date
     },
     date: {
         type: Date,

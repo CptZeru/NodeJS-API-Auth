@@ -40,6 +40,11 @@ router.post('/login', async (req, res)=>{
     //Check if user email doesn't exist in db
     const user = await User.findOne({email: req.body.email});
     if(!user) return res.status(400).send({err: "Email or Password is invalid"});
+    
+    //Check email verification
+    const emailVerified = user.isVerified;
+    if(!emailVerified) return res.status(400).send({type: "not-verified", err: "Your account hasn't been verified"})
+
     //Check Password isCorrect
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if(!validPass) return res.status(400).send({err: "Email or Password is invalid"})
